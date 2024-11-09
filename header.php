@@ -1,7 +1,4 @@
-<?php
 
-
-?>
 
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -38,49 +35,81 @@
 <body id="category">
 
 	<!-- Start Header Area -->
-	<header class="header_area sticky-header">
-		<div class="main_menu">
-			<nav class="navbar navbar-expand-sm navbar-light main_box">
-				<div class="container" style="height: 60px;">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.php"><h4>E&I Shopping<h4></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
-							<li class="nav-item">
-								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between" action="index.php" method="post">
-					<input type="text" class="form-control" id="search_input" name="search" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
-	</header>
+	<!-- Start Header Area -->
+<header class="header_area sticky-header">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-sm navbar-light main_box">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="index.php"><h4>E&I Shopping</h4></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Cart Count -->
+                <?php  
+                $cart = 0;
+                if (isset($_SESSION['cart'])) {
+                    foreach ($_SESSION['cart'] as $qty) {
+                        $cart += $qty;
+                    }
+                }
+                ?>
+
+                <!-- Navbar Links, Cart Icon, and Search Icon -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-auto d-flex align-items-center">
+                        <li class="nav-item d-flex align-items-center">
+                            <!-- Cart Icon -->
+                            <a href="cart.php" class="nav-link cart">
+                                <i class="ti-bag"></i> <span class="badge badge-danger"><?php echo $cart; ?></span>
+                            </a>
+                            <!-- Search Icon -->
+                            <button class="btn p-0 ml-2" type="button" id="search-icon">
+                                <span class="lnr lnr-magnifier"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Search Input Box -->
+    <div class="search_input" id="search_input_box" style="display: none;">
+        <div class="container">
+            <form class="d-flex justify-content-between" action="index.php" method="post">
+                <input type="text" class="form-control" id="search_input" name="search" placeholder="Search Here">
+                <button type="submit" class="btn">Search</button>
+                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+            </form>
+        </div>
+    </div>
+</header>
+<!-- End Header Area -->
+
+<script>
+    // Toggle search box visibility
+    document.getElementById('search-icon').onclick = function() {
+        document.getElementById('search_input_box').style.display = 'block';
+    };
+    document.getElementById('close_search').onclick = function() {
+        document.getElementById('search_input_box').style.display = 'none';
+    };
+</script>
+
 	<!-- End Header Area -->
 
 	<!-- Start Banner Area -->
-	<section class="banner-area organic-breadcrumb">
+	<section class="banner-area organic-breadcrumb" style="margin-bottom:0 !important">
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
 					<h1>Welcome</h1>
+                    <h3><?php echo $_SESSION['username']; ?></h3>
 					<p>Fashion isn’t just about clothes – it’s about self-expression. Dress to inspire!</p>
+                    <a href="logout.php" class="btn btn-outline-danger">Logout</a>
 				</div>
 			</div>
 		</div>

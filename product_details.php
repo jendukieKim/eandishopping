@@ -1,35 +1,40 @@
 <?php 
-require 'config/config.php';
-include('header.php');
-$id = $_GET['id'];
-//retrieve product detail
-$stmt = $pdo->prepare("SELECT p.*, c.name AS category
-FROM products AS p
-JOIN categories AS c ON p.category_id = c.id
-WHERE p.id = :id;
-");
-$stmt->execute(
-	array(':id' => $id)
-);
-$result = $stmt->fetchAll();
+session_start();
+	require 'config/config.php';
+	if(empty($_SESSION['userId']) && empty($_SESSION['loggin'])){
+		header('Location:login.php');
+	  }
+	  if($_SESSION['role'] != 0){
+		header("Location:admin/login.php");
+	}
+	include('header.php');
+	$id = $_GET['id'];
+	//retrieve product detail
+	$stmt = $pdo->prepare("SELECT p.*, c.name AS category, c.id as category_id
+	FROM products AS p
+	JOIN categories AS c ON p.category_id = c.id
+	WHERE p.id = :id;
+	");
+	$stmt->execute(
+		array(':id' => $id)
+	);
+	$result = $stmt->fetchAll();
+
+
+
+
 
 ?>
 				<!--================Single Product Area =================-->
-	<div class="product_image_area">
+	<div class="product_image_area" style="padding-top:0 !important">
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
-					<div class="s_Product_carousel">
+					
 						<div class="single-prd-item">
-							<img class="img-fluid" src="admin/images/<?php echo $result[0]['image']; ?>" alt="">
+							<img class="img-fluid" src="admin/images/<?php echo $result[0]['image']; ?>" alt="" width="500">
 						</div>
-						<div class="single-prd-item">
-							<img class="img-fluid" src="admin/images/<?php echo $result[0]['image']; ?>" alt="">
-						</div>
-						<div class="single-prd-item">
-							<img class="img-fluid" src="admin/images/<?php echo $result[0]['image']; ?>" alt="">
-						</div>
-					</div>
+					
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
@@ -40,19 +45,22 @@ $result = $stmt->fetchAll();
 							<li><a href="#"><span>Stock</span> : <?php echo $result[0]['quantity']; ?></a></li>
 						</ul>
 						<p><?php echo $result[0]['description']; ?></p>
+						<form action="addtocart.php" method="post">
+							<input type="hidden" name="id" value="<?php  echo $result[0]['id'] ?>">
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
 							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
 							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 							 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp; &amp; sst > 0 ) result.value--;return false;"
+							<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
 							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 						
 							</div>
 						<div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="cart.php">Add to Cart</a>
-							
+							<input type="submit" name="submit" class="primary-btn" style="border:1px;" value="Add to cart">
+							<a href="index.php" class="primary-btn">Back</a>
 						</div><br><br>
+						</form>
 					</div>
 				</div>
 			</div>

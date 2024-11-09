@@ -3,10 +3,11 @@ session_start();
 if(empty($_SESSION['userId']) && empty($_SESSION['loggin'])){
 	header('Location:login.php');
   }
+if($_SESSION['role'] != 0){
+	header("Location:admin/login.php");
+}
   
-  if($_SESSION['role'] != 1){
-	header('Location:login.php');
-  }
+ 
 if (!empty($_POST['search'])) {
   setcookie('search',$_POST['search'], time() + (86400 * 30), "/");
 }else{
@@ -126,7 +127,7 @@ if (!empty($_POST['search'])) {
 					foreach ($result as $key => $value) {?>
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" src="admin/images/<?php echo $value['image']?>" style="height: 250px;">
+							<a href="product_details.php?id=<?php echo $value['id'] ?>"><img class="img-fluid" src="admin/images/<?php echo $value['image']?>" style="height: 250px;"></a>
 								<div class="product-details">
 									<h6><?php echo $value['name']?></h6>
 									<div class="price">

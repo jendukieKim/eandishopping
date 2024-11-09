@@ -11,6 +11,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <link rel="shortcut icon" href="logo/market.png" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -134,14 +135,40 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="report.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+          <li class="nav-item menu">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Report
-                <!-- <span class="right badge badge-danger">New</span> -->
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="weekly_report.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Weekly Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="monthly_report.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Monthly Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="loyal_user.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Loyal Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="best_selling_item.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Best Seller Items</p>
+                </a>
+              </li>
+            </ul>
           </li>
           
         </ul>
